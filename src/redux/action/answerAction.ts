@@ -6,6 +6,7 @@ export const changeAnswer = (data: any) => ({
   payload: data
 });
 
-export const resetAnswer = () => ({
+export const resetAnswer = (data:any) => ({
   type: RESET_ANSWER,
+  payload:data,
 })

@@ -74,7 +74,7 @@ const Survey2: React.FC<{answers: any; changeAnswer: (data: any) => void}> = ({
         <Button
           title="Next"
           color="green"
-          onPress={() => navigation.navigate('Answers')}
+          onPress={() => navigation.navigate('Home')}
         />
       </View>
     </View>

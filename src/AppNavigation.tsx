@@ -8,44 +8,51 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {UserContext} from './context/UserContext';
 import Home from './screen/Home';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Provider} from 'react-redux';
+import {connect, Provider} from 'react-redux';
 import store from './redux/store';
-
+import {login} from "./redux/action/authenticateAction";
+import LoginScreen from "./screen/Login";
 const Stack = createStackNavigator();
+import ProductsList from "./screen/productsList";
+import PushData from "./screen/pushData";
 
-const AppNavigation: React.FC = () => {
-  const user = useContext(UserContext);
+const AppNavigation: React.FC<{userdata: any, Login: (data: any) => void}> = ({userdata, Login}) => {
 
-  useEffect(() => {
-    AsyncStorage.getItem('userName')
-      .then(value => {
-        console.log(value);
-        user.setUser({
-          name: value,
-          password: '',
-        });
-      })
-      .catch(e => console.log(e));
-  }, []);
 
+//////////
+//     useEffect(()=>{
+//         AsyncStorage.getItem('UserData').then(value => {
+//             const data = JSON.parse(value);
+//             store.dispatch(login(data));
+//             console.log(data);
+//         }).catch(e=>console.log(e));
+//     })
+    console.log(store.getState())
+    const isLogin=store.getState().authenticateReducer?.name;
   return (
     <NavigationContainer>
-      <Provider store={store}>
         <Stack.Navigator>
-          {!user?.user?.name ? (
-            <Stack.Screen name="Login" component={Login} />
-          ) : (
-            <>
-              <Stack.Screen name="Survey" component={Survey} />
-              <Stack.Screen name="Home" component={Home} />
-              <Stack.Screen name="Survey2" component={Survey2} />
-              <Stack.Screen name="Answers" component={Answers} />
-            </>
-          )}
+          {/*{isLogin? (*/}
+          {/*    <Stack.Screen name="Home" component={Home} />*/}
+          {/*) : (*/}
+          {/*  <>*/}
+          {/*      <Stack.Screen name="Login" component={LoginScreen} />*/}
+          {/*  </>*/}
+          {/*)}*/}
+            <Stack.Screen name="ProductsList" component={ProductsList}></Stack.Screen>
+            <Stack.Screen name="PushData" component={PushData}></Stack.Screen>
         </Stack.Navigator>
-      </Provider>
     </NavigationContainer>
   );
 };
 
-export default AppNavigation;
+
+const mapStateToProps = (state: any) => {
+    const {authenticateReducer} = state;
+    return {userdata: authenticateReducer};
+};
+
+
+export default connect(mapStateToProps, {Login: login})(AppNavigation);
+
+

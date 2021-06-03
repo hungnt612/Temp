@@ -8,6 +8,13 @@ import {Controller, useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {LOGIN} from "../redux/action/authenticateAction";
+import {login} from "../redux/action/authenticateAction";
+import store from "../redux/store";
+import {connect} from "react-redux";
+import {changeAnswer} from "../redux/action/answerAction";
+import authenticateReducer from "../redux/reducer/authenticateReducer";
+
 
 const schema = yup.object().shape({
   name: yup.string().required(),
@@ -19,8 +26,7 @@ interface IFormInputs {
   password: string;
 }
 
-const Login: React.FC = () => {
-  const user = useContext(UserContext);
+const LoginScreen: React.FC<{userdata: any, Login: (data: any) => void}> = ({userdata, Login}) => {
   const {
     control,
     handleSubmit,
@@ -29,10 +35,11 @@ const Login: React.FC = () => {
     resolver: yupResolver(schema),
   });
 
-  const submit = async (data: any) => {
+
+
+  const submit = (data: any) => {
     try {
-      await AsyncStorage.setItem('userName', data.name);
-      user.setUser(data);
+      store.dispatch(login(data));
     } catch (e) {
       console.log(e);
     }
@@ -51,7 +58,7 @@ const Login: React.FC = () => {
           />
         )}
         rules={{required: true}}
-        name={'name'}
+        name={'userName'}
       />
       {errors.name && <Text>This is required.</Text>}
       <Controller
@@ -78,4 +85,11 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+
+
+const mapStateToProps = (state: any) => {
+    const {authenticateReducer} = state;
+    return {userdata: authenticateReducer};
+};
+export default connect(mapStateToProps, {Login: login})(LoginScreen);
+
