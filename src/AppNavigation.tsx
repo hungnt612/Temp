@@ -12,10 +12,12 @@ import {connect, Provider} from 'react-redux';
 import store from './redux/store';
 import {login} from "./redux/action/authenticateAction";
 import LoginScreen from "./screen/Login";
-const Stack = createStackNavigator();
-import ProductsList from "./screen/productsList";
+import Products_List from "./screen/products_list_react_query";
 import PushData from "./screen/pushData";
 
+
+
+const Stack = createStackNavigator();
 const AppNavigation: React.FC<{userdata: any, Login: (data: any) => void}> = ({userdata, Login}) => {
 
 
@@ -39,7 +41,7 @@ const AppNavigation: React.FC<{userdata: any, Login: (data: any) => void}> = ({u
           {/*      <Stack.Screen name="Login" component={LoginScreen} />*/}
           {/*  </>*/}
           {/*)}*/}
-            <Stack.Screen name="ProductsList" component={ProductsList}></Stack.Screen>
+            <Stack.Screen name="Products_List" component={Products_List} options={{ headerShown: false }}></Stack.Screen>
             <Stack.Screen name="PushData" component={PushData}></Stack.Screen>
         </Stack.Navigator>
     </NavigationContainer>
