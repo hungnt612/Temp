@@ -18,8 +18,8 @@ import PushData from "./screen/pushData";
 
 
 const Stack = createStackNavigator();
-const AppNavigation: React.FC<{userdata: any, Login: (data: any) => void}> = ({userdata, Login}) => {
-
+// const AppNavigation: React.FC<{userdata: any, Login: (data: any) => void}> = ({userdata, Login}) => {
+const AppNavigation: React.FC = () => {
 
 //////////
 //     useEffect(()=>{
@@ -29,8 +29,8 @@ const AppNavigation: React.FC<{userdata: any, Login: (data: any) => void}> = ({u
 //             console.log(data);
 //         }).catch(e=>console.log(e));
 //     })
-    console.log(store.getState())
-    const isLogin=store.getState().authenticateReducer?.name;
+//     console.log(store.getState())
+//     const isLogin=store.getState().authenticateReducer?.name;
   return (
     <NavigationContainer>
         <Stack.Navigator>
@@ -49,12 +49,12 @@ const AppNavigation: React.FC<{userdata: any, Login: (data: any) => void}> = ({u
 };
 
 
-const mapStateToProps = (state: any) => {
-    const {authenticateReducer} = state;
-    return {userdata: authenticateReducer};
-};
+// const mapStateToProps = (state: any) => {
+//     const {authenticateReducer} = state;
+//     return {userdata: authenticateReducer};
+// };
 
-
-export default connect(mapStateToProps, {Login: login})(AppNavigation);
-
+//
+// export default connect(mapStateToProps, {Login: login})(AppNavigation);
+export default AppNavigation;
 
