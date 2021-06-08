@@ -4,7 +4,7 @@ import {View, Text, Dimensions, TouchableOpacity, Alert} from 'react-native';
 type ButtonType = {
     label: string;
     colorCode: string;
-    onPress: (val: string) => void;
+    onPress: (val: any) => void;
 };
 
 const CustomButton: React.FC<ButtonType> = ({label, colorCode, onPress}) => {

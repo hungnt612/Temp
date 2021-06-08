@@ -14,8 +14,8 @@ import {login} from "./redux/action/authenticateAction";
 import LoginScreen from "./screen/Login";
 import Products_List from "./screen/products_list_react_query";
 import PushData from "./screen/pushData";
-
-
+import ProductsAction from "./screen/edit_products_list_react_query";
+import ProductDetail from "./screen/productDetail";
 
 const Stack = createStackNavigator();
 // const AppNavigation: React.FC<{userdata: any, Login: (data: any) => void}> = ({userdata, Login}) => {
@@ -42,7 +42,8 @@ const AppNavigation: React.FC = () => {
           {/*  </>*/}
           {/*)}*/}
             <Stack.Screen name="Products_List" component={Products_List} options={{ headerShown: false }}></Stack.Screen>
-            <Stack.Screen name="PushData" component={PushData}></Stack.Screen>
+            <Stack.Screen name="ProductsAction" component={ProductsAction} options={{ title:"hihi"}}></Stack.Screen>
+            <Stack.Screen name="ProductDetail" component={ProductDetail} options={{ headerShown: false }}></Stack.Screen>
         </Stack.Navigator>
     </NavigationContainer>
   );

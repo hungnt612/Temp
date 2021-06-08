@@ -19,6 +19,7 @@ import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
 type ItemProps = {
+    id:string;
     productName: string;
     price: string;
     image:string;
@@ -27,37 +28,31 @@ type ItemProps = {
 
 
 const {width, height} = Dimensions.get('window');
-const Item: React.FC<ItemProps> = ({productName,price,image,onPress}) => (
-    <View>
-        <TouchableOpacity onPress={
-            () => Alert.alert(
-                productName,
-                price,
-                [
-                    {
-                        text: 'Cancel',
-                        onPress: () => console.log('Cancel Pressed'),
-                        style: 'cancel',
-                    },
-                    {text: 'OK', onPress: () => console.log('OK Pressed')},
-                ],
-            )
-        }>
-            <View style={styles.itemContainer}>
-                <Image source={{uri: image}} style={styles.imgContainer} />
-                <View style={styles.titleContainer}>
-                    <Text style={styles.title} numberOfLines={2} ellipsizeMode="tail">
-                        {productName}
-                    </Text>
+const Item: React.FC<ItemProps> = ({id,productName,price,image,onPress}) => {
+    const navigation=useNavigation();
+    return(
+        <View>
+            <TouchableOpacity onPress={
+                () =>{
+                navigation.navigate('ProductDetail',{id:id,productName:productName,price:price,image:image})
+                }
+            }>
+                <View style={styles.itemContainer}>
+                    <Image source={{uri: image}} style={styles.imgContainer} />
+                    <View style={styles.titleContainer}>
+                        <Text style={styles.title} numberOfLines={2} ellipsizeMode="tail">
+                            {productName}
+                        </Text>
+                    </View>
+                    <View style={styles.priceContainer}>
+                        <Text style={styles.price}>{price}</Text>
+                    </View>
                 </View>
-                <View style={styles.priceContainer}>
-                    <Text style={styles.price}>{price}</Text>
-                </View>
-            </View>
-        </TouchableOpacity>
-    </View>
+            </TouchableOpacity>
+        </View>
 
-)
+    )
+}
 
 const styles=StyleSheet.create({
     container: {
