@@ -23,6 +23,8 @@ import CustomInput from "../CustomInput";
 import {AddProduct,ThemSP} from "../react-query/ProductAction";
 import {QueryProducts} from "../react-query/queryProducts";
 import {useMutation,useQueryClient} from "react-query";
+import {AddProduct2} from "../react-query/postProducts";
+import {RenewCache} from "../react-query/renewCache";
 
 
 const schema = yup.object().shape({
@@ -37,9 +39,9 @@ interface IFormInputs {
 }
 
 const ProductsAction:React.FC=()=>{
-    const queryClient=useQueryClient();
+    const useQuery=useQueryClient();
     const navigation=useNavigation();
-    const onSubmit = (data: any) => {ThemSP(data);queryClient.invalidateQueries('products'); }
+    const onSubmit = (data: any) => {AddProduct(data);useQuery.invalidateQueries("products")}
     const {
         control,
         handleSubmit,
@@ -47,7 +49,7 @@ const ProductsAction:React.FC=()=>{
     } = useForm<IFormInputs>({
         resolver: yupResolver(schema),
     });
-
+    console.log(useQuery)
     return(
         <View style={styles.root}>
             <Controller

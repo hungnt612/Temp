@@ -22,15 +22,17 @@ import * as yup from 'yup';
 import CustomInput from "../CustomInput";
 import { useRoute } from '@react-navigation/native';
 import {DeleteProduct} from "../react-query/ProductAction";
-
+import {useMutation,useQueryClient} from "react-query";
 
 const ProductDetail:React.FC=()=>{
+    const useQuery=useQueryClient();
     const navigation=useNavigation();
     const route = useRoute();
     const id=route.params?.id;
 
     const Delete=(data:any)=>{
         DeleteProduct(data);
+        useQuery.invalidateQueries("products")
     }
 
     return(
@@ -42,7 +44,7 @@ const ProductDetail:React.FC=()=>{
             <Text style={styles.productReview}>bla bla bla</Text>
             <View style={styles.btnContainer}>
                 <CustomButton label='Edit'  colorCode='#ff2bfa' />
-                <CustomButton label='Delete'  colorCode='#FF272C' onPress={()=>Delete(id)}/>
+                <CustomButton label='Delete'  colorCode='#FF272C' onPress={()=>{Delete(id); navigation.goBack()}}/>
                 <CustomButton label='Cancel'  colorCode='#24FFF2' onPress={navigation.goBack} />
             </View>
         </View>

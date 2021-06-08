@@ -6,7 +6,7 @@ import {QueryProducts} from "./queryProducts";
 import {useMutation,useQueryClient} from "react-query";
 import React from "react";
 import {matchMutation} from "react-query/types/core/utils";
-
+import {RenewCache} from "./renewCache";
 
 
 export const AddProduct = (data:any) => {
@@ -36,13 +36,6 @@ export const AddProduct = (data:any) => {
     console.log(data)
 }
 
-export const ThemSP=(data:any)=>{
-    const url = `${baseUrl}products`;
-    const mutation=useMutation(data=>axios.post(url,data))
-    if (mutation.isLoading){
-        console.log('loaddddd')
-    }
-}
 
 export const DeleteProduct = (id:any) => {
     const url = `${baseUrl}products/${id}`;
